@@ -2,20 +2,14 @@ import os
 from pathlib import Path
 from PyPDF2 import PdfReader, PdfWriter
 
-def ensure_output_folder():
-    """Ensure the output folder exists."""
-    output_dir = Path("output")
-    output_dir.mkdir(exist_ok=True)
-    return output_dir
+def ensure_folder(folder_name):
+    """Ensure the given folder exists."""
+    folder = Path(folder_name)
+    folder.mkdir(exist_ok=True)
+    return folder
 
 def swap_even_odd_pages(input_file, output_dir):
-    """
-    Swap even and odd pages in a PDF file using PyPDF2.
-    
-    Args:
-        input_file (str): Path to the input PDF file.
-        output_dir (Path): Path to the output directory.
-    """
+    """Swap even and odd pages in a PDF file using PyPDF2."""
     try:
         reader = PdfReader(input_file)
         writer = PdfWriter()
@@ -47,14 +41,8 @@ def swap_even_odd_pages(input_file, output_dir):
     except Exception as e:
         print(f"Error processing {input_file}: {e}")
 
-def process_directory(directory):
-    """
-    Process all PDF files in the specified directory.
-    
-    Args:
-        directory (str): Path to the directory containing PDF files.
-    """
-    output_dir = ensure_output_folder()
+def process_directory(directory, output_dir):
+    """Process all PDF files in the specified directory."""
     pdf_files = list(Path(directory).glob("*.pdf"))
     
     if not pdf_files:
@@ -69,22 +57,25 @@ def main():
     parser = argparse.ArgumentParser(description="Swap even and odd pages in PDF files using PyPDF2.")
     parser.add_argument(
         "input", 
+        nargs="?",  # Optional argument
         help="Path to a single PDF file or a directory containing PDF files."
     )
     args = parser.parse_args()
 
-    input_path = Path(args.input)
-    if not input_path.exists():
-        print(f"Error: The path {args.input} does not exist.")
-        return
+    output_dir = ensure_folder("output")
+    input_dir = ensure_folder("input")
 
-    if input_path.is_file():
-        output_dir = ensure_output_folder()
-        swap_even_odd_pages(str(input_path), output_dir)
-    elif input_path.is_dir():
-        process_directory(str(input_path))
+    if args.input:
+        input_path = Path(args.input)
+        if input_path.is_file():
+            swap_even_odd_pages(str(input_path), output_dir)
+        elif input_path.is_dir():
+            process_directory(input_path, output_dir)
+        else:
+            print(f"Error: The path {args.input} is not a valid file or directory.")
     else:
-        print(f"Error: The path {args.input} is not a valid file or directory.")
+        print("No input provided, processing all files in the 'input' folder...")
+        process_directory(input_dir, output_dir)
 
 if __name__ == "__main__":
     main()
