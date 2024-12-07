@@ -1,7 +1,3 @@
-Here is the **Markdown documentation** for both programs, formatted for a GitHub repository:
-
----
-
 # PDF Page Manipulation Tools
 
 This repository contains two Python programs to process PDF files using the `PyPDF2` library. Each tool performs a specific task: 
@@ -51,7 +47,7 @@ This tool:
 
 #### Command
 ```bash
-python swap_pages.py [input]
+python swap_adjust.py [input]
 ```
 
 - **If no input is specified**, the program processes all PDF files in the `input` folder.
@@ -60,15 +56,15 @@ python swap_pages.py [input]
 #### Examples
 - Process a single file:
   ```bash
-  python swap_pages.py /path/to/file.pdf
+  python swap_adjust.py /path/to/file.pdf
   ```
 - Process all PDFs in a specific directory:
   ```bash
-  python swap_pages.py /path/to/directory
+  python swap_adjust.py /path/to/directory
   ```
 - Process all PDFs in the `input` folder (default behavior):
   ```bash
-  python swap_pages.py
+  python swap_adjust.py
   ```
 
 ---
@@ -88,7 +84,7 @@ This tool:
 
 #### Command
 ```bash
-python adjust_page_size.py [input]
+python size_adjust.py [input]
 ```
 
 - **If no input is specified**, the program processes all PDF files in the `input` folder.
@@ -97,15 +93,15 @@ python adjust_page_size.py [input]
 #### Examples
 - Adjust a single file:
   ```bash
-  python adjust_page_size.py /path/to/file.pdf
+  python size_adjust.py /path/to/file.pdf
   ```
 - Adjust all PDFs in a specific directory:
   ```bash
-  python adjust_page_size.py /path/to/directory
+  python size_adjust.py /path/to/directory
   ```
 - Adjust all PDFs in the `input` folder (default behavior):
   ```bash
-  python adjust_page_size.py
+  python size_adjust.py
   ```
 
 ---
@@ -114,12 +110,3 @@ python adjust_page_size.py [input]
 Both tools generate an `output` folder automatically if it does not exist. Processed files are saved here with descriptive suffixes:
 - `_swapped_adjusted` for the first tool.
 - `_adjusted` for the second tool.
-
----
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-This documentation should make your repository clear and easy to use. Let me know if you need more details or additional sections!
